@@ -1,19 +1,17 @@
 /* General */
-
 body {
-	background-color: black;
+	background-color: #000;
 }
 
 a {
-	color: white;
+	color: #fff;
 }
 
 /* Stylin those divs */
-
 .main-wrapper {
-	width:100%;
+	width: 100%;
 	height: 100vh;
-	background: url('img/bg2.jpg') no-repeat center center fixed;
+	background: url(img/bg2.jpg) no-repeat center center fixed;
 	background-size: cover;
 	display: inline-block;
 }
@@ -22,16 +20,15 @@ a {
 	max-width: 80%;
 	height: 200px;
 	margin: 0 auto;
-	/*vertically center*/
+/*vertically center*/
 	position: relative;
- 	top: 50%;
- 	transform: translateY(-50%);
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .logo {
-	width:32%;
+	width: 32%;
 	display: inline-block;
-
 }
 
 .logo svg {
@@ -44,18 +41,18 @@ a {
 	height: 100%;
 	display: block;
 	float: right;
-	color: white;
- 	border-left: 1px solid white;
+	color: #fff;
+	border-left: 1px solid #fff;
 }
 
 .bio p {
-	font: 1.8em/1.5 'Lora', serif;	
- 	padding-left:10vw;
+	font: 1.8em/1.5 Lora,serif;
+	padding-left: 10vw;
 	margin: 0;
- 	/*vertically center*/
- 	position: relative;
- 	top: 50%;
- 	transform: translateY(-50%);
+/*vertically center*/
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 #ttlink {
@@ -68,24 +65,24 @@ a {
 }
 
 .centered-x {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
 }
 
-.arrow svg:hover #line1, .arrow svg:hover #line2 {
+.arrow svg:hover #line1,.arrow svg:hover #line2 {
 	stroke-width: 4;
 }
 
-.arrow svg #line1, .arrow svg #line2 {
+.arrow svg #line1,.arrow svg #line2 {
 	transition: 200ms;
 }
 
 footer {
-	background-color: black;
-	color: white;
+	background-color: #000;
+	color: #fff;
 	padding: 1em 0;
-	font-family: 'Arimo', arial, sans-serif;
+	font-family: 'Arimo',arial,sans-serif;
 	text-align: center;
 }
 
@@ -94,7 +91,6 @@ footer .email {
 }
 
 /* Animation of bottom icon hovers */
-
 svg:hover #ttlogo {
 	fill: #6fbc6d;
 	transition: 200ms;
@@ -106,91 +102,100 @@ svg:hover #fblogo {
 }
 
 /* Animation of the logo - guilh */
-
 @keyframes offset {
-  100% {
-    stroke-dashoffset: 0;
-  }
+	100% {
+		stroke-dashoffset: 0;
+	}
 }
 
 @keyframes fill-it {
-  100% {
-    fill: #fff;
-  }
+	100% {
+		fill: #fff;
+	}
 }
 
 #SS {
-  stroke: #fff;
-  stroke-width: 4;
-  stroke-dasharray: 810;
-  stroke-dashoffset: 810;
-  animation: offset 2s linear forwards, fill-it .8s 1.5s forwards;
+	stroke: #fff;
+	stroke-width: 4;
+	stroke-dasharray: 810;
+	stroke-dashoffset: 810;
+	animation: offset 2s linear forwards,fill-it .8s 1.5s forwards;
 }
 
 /* @media queries */
-
 @media screen and (min-width: 616px ) and (max-width: 872px) {
-
-
 	.main-wrapper {
 		height: inherit;
 		padding-bottom: 4rem;
 	}
+
 	.content {
 		position: static;
-	 	transform: none;
+		transform: none;
+	}
 
-	}
 	.logo {
-		display:block;
+		display: block;
 		width: 100%;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid #fff;
 	}
+
 	.bio {
 		display: block;
-		margin: 4rem 0 0 0;
+		margin: 4rem 0 0;
 		width: 100%;
 		border-left: none;
 	}
+
 	.bio p {
 		padding-left: 0;
 		text-align: center;
 		font-size: 1.6em;
 		display: block;
 	}
-	.arrow {display:none;}
 
-
+	.arrow {
+		display: none;
+	}
 }
 
-@media screen and (max-height: 575px), screen and (max-width: 982px) {.arrow{display:none;}}
+@media screen and (max-height: 575px),screen and (max-width: 982px) {
+	.arrow {
+		display: none;
+	}
+}
 
 @media screen and (max-width: 615px) {
-
 	.main-wrapper {
 		height: inherit;
 		padding-bottom: 3rem;
 	}
+
 	.content {
 		position: static;
-	 	transform: none;
+		transform: none;
 	}
+
 	.logo {
 		display: block;
 		width: 100%;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid #fff;
 	}
+
 	.bio {
 		display: block;
-		margin: 3em 0 0 0;
+		margin: 3em 0 0;
 		width: 100%;
 		border-left: none;
 	}
+
 	.bio p {
 		padding-left: 0;
 		text-align: center;
 		font-size: 1.1em;
 	}
-	.arrow {display:none;}
 
+	.arrow {
+		display: none;
+	}
 }
