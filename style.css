@@ -140,11 +140,13 @@ svg:hover #fblogo {
 
 
 	.main-wrapper {
-		height: 675px;
+		height: inherit;
+		padding-bottom: 4rem;
 	}
 	.content {
 		position: static;
 	 	transform: none;
+
 	}
 	.logo {
 		display:block;
@@ -153,7 +155,7 @@ svg:hover #fblogo {
 	}
 	.bio {
 		display: block;
-		margin: 3em 0 0 0;
+		margin: 4rem 0 0 0;
 		width: 100%;
 		border-left: none;
 	}
@@ -170,20 +172,20 @@ svg:hover #fblogo {
 @media (max-width: 615px) {
 
 	.main-wrapper {
-		height: 675px;
+		height: 600px;
 	}
 	.content {
 		position: static;
 	 	transform: none;
 	}
 	.logo {
-		display:block;
+		display: block;
 		width: 100%;
 		border-bottom: 1px solid white;
 	}
 	.bio {
 		display: block;
-		margin: 35% 0 0 0;
+		margin: 6rem 0 0 0;
 		width: 100%;
 		border-left: none;
 	}
