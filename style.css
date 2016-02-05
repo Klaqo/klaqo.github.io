@@ -1,11 +1,4 @@
-/* To do:
-move vertical center to its own class
-clean up css
-clean up html
-maybe set max-heights to fix responsiveness
-assets & use for svg
-
-*/
+/* General */
 
 body {
 	background-color: black;
@@ -13,8 +6,9 @@ body {
 
 a {
 	color: white;
-	text-decoration: underline;
 }
+
+/* Stylin those divs */
 
 .main-wrapper {
 	width:100%;
@@ -28,6 +22,7 @@ a {
 	max-width: 80%;
 	height: 200px;
 	margin: 0 auto;
+	/*vertically center*/
 	position: relative;
  	top: 50%;
  	transform: translateY(-50%);
@@ -42,27 +37,25 @@ a {
 .logo svg {
 	margin: 0 auto;
 	display: block;
-	border-radius: 100%;
 }
 
 .bio {
 	width: 65%;
 	height: 100%;
-	display: inline-block;
+	display: block;
 	float: right;
 	color: white;
  	border-left: 1px solid white;
 }
 
 .bio p {
-	padding-left:10vw;
+	font: 1.8em/1.5 'Lora', serif;	
+ 	padding-left:10vw;
 	margin: 0;
-	position: relative;
+ 	/*vertically center*/
+ 	position: relative;
  	top: 50%;
  	transform: translateY(-50%);
- 	font-family: 'Lora', serif;
- 	font-size: 1.8em;
- 	line-height: 1.5em;
 }
 
 #ttlink {
@@ -91,14 +84,16 @@ a {
 footer {
 	background-color: black;
 	color: white;
-	text-align: center;
 	padding: 1em 0;
-	font-family: 'Arimo', sans-serif;
+	font-family: 'Arimo', arial, sans-serif;
+	text-align: center;
 }
 
 footer .email {
 	letter-spacing: 5px;
 }
+
+/* Animation of bottom icon hovers */
 
 svg:hover #ttlogo {
 	fill: #6fbc6d;
@@ -110,7 +105,7 @@ svg:hover #fblogo {
 	transition: 200ms;
 }
 
-/* Animation of the logo */
+/* Animation of the logo - guilh */
 
 @keyframes offset {
   100% {
@@ -132,9 +127,7 @@ svg:hover #fblogo {
   animation: offset 2s linear forwards, fill-it .8s 1.5s forwards;
 }
 
-/* @media Breakpoints */
-
-
+/* @media queries */
 
 @media screen and (min-width: 616px ) and (max-width: 872px) {
 
@@ -167,7 +160,10 @@ svg:hover #fblogo {
 	}
 	.arrow {display:none;}
 
+
 }
+
+@media screen and (max-height: 575px), screen and (max-width: 982px) {.arrow{display:none;}}
 
 @media screen and (max-width: 615px) {
 
