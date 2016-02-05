@@ -46,7 +46,9 @@ a {
 }
 
 .bio p {
-	font: 1.8em/1.5 Lora,serif;
+	font: 1.8em/1.5 Lora, serif;
+	font-style: italic;
+	font-weight: 400;
 	padding-left: 10vw;
 	margin: 0;
 /*vertically center*/
