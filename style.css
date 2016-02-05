@@ -136,7 +136,7 @@ svg:hover #fblogo {
 
 
 
-@media (min-width: 616px ) and (max-width: 872px) {
+@media screen and (min-width: 616px ) and (max-width: 872px) {
 
 
 	.main-wrapper {
@@ -169,7 +169,7 @@ svg:hover #fblogo {
 
 }
 
-@media (max-width: 615px) {
+@media screen and (max-width: 615px) {
 
 	.main-wrapper {
 		height: inherit;
