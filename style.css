@@ -1,0 +1,199 @@
+/* To do:
+move vertical center to its own class
+clean up css
+clean up html
+maybe set max-heights to fix responsiveness
+assets & use for svg
+
+*/
+
+body {
+	background-color: black;
+}
+
+a {
+	color: white;
+	text-decoration: underline;
+}
+
+.main-wrapper {
+	width:100%;
+	height: 100vh;
+	background: url('img/bg2.JPG') no-repeat center center fixed;
+	background-size: cover;
+	display: inline-block;
+}
+
+.content {
+	max-width: 80%;
+	height: 200px;
+	margin: 0 auto;
+	position: relative;
+ 	top: 50%;
+ 	transform: translateY(-50%);
+}
+
+.logo {
+	width:32%;
+	display: inline-block;
+
+}
+
+.logo svg {
+	margin: 0 auto;
+	display: block;
+	border-radius: 100%;
+}
+
+.bio {
+	width: 65%;
+	height: 100%;
+	display: inline-block;
+	float: right;
+	color: white;
+ 	border-left: 1px solid white;
+}
+
+.bio p {
+	padding-left:10vw;
+	margin: 0;
+	position: relative;
+ 	top: 50%;
+ 	transform: translateY(-50%);
+ 	font-family: 'Lora', serif;
+ 	font-size: 1.8em;
+ 	line-height: 1.5em;
+}
+
+#ttlink {
+	color: #6fbc6d;
+}
+
+.arrow {
+	position: absolute;
+	bottom: 5vh;
+}
+
+.centered-x {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.arrow svg:hover #line1, .arrow svg:hover #line2 {
+	stroke-width: 4;
+}
+
+.arrow svg #line1, .arrow svg #line2 {
+	transition: 200ms;
+}
+
+footer {
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 1em 0;
+	font-family: 'Arimo', sans-serif;
+}
+
+footer .email {
+	letter-spacing: 5px;
+}
+
+svg:hover #ttlogo {
+	fill: #6fbc6d;
+	transition: 200ms;
+}
+
+svg:hover #fblogo {
+	fill: #3B5999;
+	transition: 200ms;
+}
+
+/* Animation of the logo */
+
+@keyframes offset {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-it {
+  100% {
+    fill: #fff;
+  }
+}
+
+#SS {
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-dasharray: 810;
+  stroke-dashoffset: 810;
+  animation: offset 2s linear forwards, fill-it .8s 1.5s forwards;
+}
+
+/* @media Breakpoints */
+
+
+
+@media (min-width: 616px ) and (max-width: 872px) {
+
+
+	.main-wrapper {
+		height: 675px;
+	}
+	.content {
+		position: relative;
+	 	top: 10vh;
+	 	transform: none;
+	}
+	.logo {
+		display:block;
+		width: 100%;
+		border-bottom: 1px solid white;
+	}
+	.bio {
+		display: block;
+		margin: 10vh 0 0 0;
+		width: 100%;
+		border-left: none;
+	}
+	.bio p {
+		padding-left: 0;
+		text-align: center;
+		font-size: 1.6em;
+		display: block;
+	}
+	.arrow {display:none;}
+
+}
+
+@media (max-width: 615px) {
+
+	.main-wrapper {
+		height: 675px;
+	}
+	.content {
+		position: relative;
+	 	top: 1vh;
+	 	transform: none;
+	}
+	.logo {
+		display:block;
+		width: 100%;
+		border-bottom: 1px solid white;
+	}
+	.bio {
+		display: block;
+		margin: 20vh 0 0 0;
+		width: 100%;
+		border-left: none;
+	}
+	.bio p {
+		padding-left: 0;
+		text-align: center;
+		font-size: 1.5em;
+	}
+	.arrow {display:none;}
+
+}
