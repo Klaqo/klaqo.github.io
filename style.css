@@ -143,8 +143,7 @@ svg:hover #fblogo {
 		height: 675px;
 	}
 	.content {
-		position: relative;
-	 	top: 10vh;
+		position: static;
 	 	transform: none;
 	}
 	.logo {
@@ -154,7 +153,7 @@ svg:hover #fblogo {
 	}
 	.bio {
 		display: block;
-		margin: 10vh 0 0 0;
+		margin: 3em 0 0 0;
 		width: 100%;
 		border-left: none;
 	}
@@ -174,8 +173,7 @@ svg:hover #fblogo {
 		height: 675px;
 	}
 	.content {
-		position: relative;
-	 	top: 1vh;
+		position: static;
 	 	transform: none;
 	}
 	.logo {
@@ -185,7 +183,7 @@ svg:hover #fblogo {
 	}
 	.bio {
 		display: block;
-		margin: 25vh 0 0 0;
+		margin: 6em 0 0 0;
 		width: 100%;
 		border-left: none;
 	}
