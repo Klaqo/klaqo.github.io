@@ -1,214 +1,229 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset=utf-8>
-        <title>Sam Sycamore - Developer in Leeds</title>
-        
-        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-            .content {
-                color: white;
-                font-family: 'Quicksand', sans-serif;
-                letter-spacing: 2px;
-                text-align: right;
 
+<head>
+    <meta charset=utf-8>
+    <title>Sam Sycamore - Developer in Leeds</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <style>
+        html {
+            background: black;
+        }
+
+        body {
+            margin: 0;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+
+        .content {
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 2px;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 25px;
+        }
+
+        a {
+            color: rgb(75, 75, 75);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: rgb(82, 184, 173);
+            transition: color 1s linear;
+        }
+
+        * {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/STLLoader.js"></script>
+    <script src="js/Projector.js"></script>
+    <script src="js/SVGRenderer.js"></script>
+
+    <script src="js/postprocessing/EffectComposer.js"></script>
+    <script src="js/postprocessing/MaskPass.js"></script>
+    <script src="js/postprocessing/RenderPass.js"></script>
+    <script src="js/postprocessing/ShaderPass.js"></script>
+
+    <script src="js/shaders/BadTVShader.js"></script>
+    <script src="js/shaders/CopyShader.js"></script>
+    <script src="js/shaders/FilmShader.js"></script>
+    <script src="js/shaders/RGBShiftShader.js"></script>
+
+    <div class="content">
+        sam sycamore,
+        <br>
+        <a href="https://hypergram.co">developer,</a>
+        <br> leeds,
+        <br>
+        <a href="mailto:hey@samsycamore.com">email me.</a>
+    </div>
+
+    <script>
+        var container;
+        var particle;
+        var camera, controls, scene, renderer, loader, material, loadCallback, scene2, element, div, renderer2;
+        var badTVPass, filmPass, RGBPass;
+        var shaderTime = 0;
+        var cross;
+        var mesh;
+        var shaderTime;
+        init();
+        animate();
+
+        function init() {
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 1e10);
+            camera.position.z = 200;
+
+            scene = new THREE.Scene();
+            scene.add(camera);
+            // light
+            var dirLight = new THREE.DirectionalLight(0xffffff);
+            dirLight.position.set(200, 200, 1000).normalize();
+            camera.add(dirLight);
+            camera.add(dirLight.target);
+
+            material = new THREE.MeshLambertMaterial({
+                color: 0xffffff,
+                shading: THREE.FlatShading
+            });
+            loader = new THREE.STLLoader()
+            loader.load('face.stl', function (geometry, materials) {
+                var obj, i;
+                mesh = new THREE.Mesh(geometry, material);
+                mesh.scale.set(.3, .3, .3)
+                mesh.rotation.x = 250.3;
+                // mesh.up.set(80,30,40)
+                scene.add(mesh);
+            });
+            //particle
+            particle = new THREE.Object3D();
+            scene.add(particle);
+            var geome = new THREE.TetrahedronGeometry(2, 0);
+            var mat = new THREE.MeshPhongMaterial({
+                color: 0xffffff,
+                shading: THREE.FlatShading
+            });
+
+            for (var i = 0; i < 1000; i++) {
+                var partMesh = new THREE.Mesh(geome, mat);
+                partMesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+                partMesh.position.multiplyScalar(90 + (Math.random() * 200));
+                partMesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+                partMesh.scale.set(.2, .2, .2)
+                particle.add(partMesh);
             }
-            a {
-                color: rgb(75, 75, 75);
-                text-decoration: none;
-            }
-            a:hover {
-                color: rgb(82, 184, 173);
-                transition: color 1s linear;
-            }
-            @media screen and (max-width:768px) {
-                * {
-                    font-size: 14px;
-                }
-            }
-            
-		</style>
-	</head>
-	<body>
-        <script src="js/three.js"></script>
-        <script src="js/STLLoader.js"></script>
-        <script src="js/Projector.js"></script>
-        <script src="js/SVGRenderer.js"></script>
-        <script src="js/3dcss.js"></script>
 
-        <script src="js/postprocessing/EffectComposer.js"></script>
-        <script src="js/postprocessing/MaskPass.js"></script>
-        <script src="js/postprocessing/RenderPass.js"></script>
-        <script src="js/postprocessing/ShaderPass.js"></script>
+            // renderer
+            renderer = new THREE.WebGLRenderer({
+                antialias: false
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container = document.createElement('div');
+            document.body.appendChild(container);
+            container.appendChild(renderer.domElement);
+            window.addEventListener('resize', onWindowResize, false);
 
-        <script src="js/shaders/BadTVShader.js"></script>
-        <script src="js/shaders/CopyShader.js"></script>
-        <script src="js/shaders/FilmShader.js"></script>
-        <script src="js/shaders/RGBShiftShader.js"></script>
-		<script>
+            //shader
+            composer = new THREE.EffectComposer(renderer);
+            renderPass = new THREE.RenderPass(scene, camera);
+            badTVPass = new THREE.ShaderPass(THREE.BadTVShader);
+            filmPass = new THREE.ShaderPass(THREE.FilmShader);
+            RGBPass = new THREE.ShaderPass(THREE.RGBShiftShader);
+            copyPass = new THREE.ShaderPass(THREE.CopyShader);
 
-            var container;
-            var particle;
-            var camera, controls, scene, renderer, loader, material, loadCallback, scene2, element, div, renderer2;
-            var badTVPass, filmPass, RGBPass;
-            var shaderTime = 0;
-            var cross;
-            var mesh;
-            var shaderTime;
-			init();
-			animate();
-			function init() {
-				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.01, 1e10 );
-				camera.position.z = 200;
-				
-				scene = new THREE.Scene();
-				scene.add( camera );
-				// light
-				var dirLight = new THREE.DirectionalLight( 0xffffff );
-				dirLight.position.set( 200, 200, 1000 ).normalize();
-				camera.add( dirLight );
-                camera.add( dirLight.target );
-
-				material = new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading } );
-				loader = new THREE.STLLoader()
-				loader.load('face.stl', function ( geometry, materials ) {
-					var obj, i;
-                    mesh = new THREE.Mesh( geometry, material );
-                    mesh.scale.set(.3,.3,.3)
-                    mesh.rotation.x = 250.3;
-                    // mesh.up.set(80,30,40)
-                    scene.add( mesh );
-                });
-                //particle
-                particle = new THREE.Object3D();
-                scene.add(particle);
-                var geome = new THREE.TetrahedronGeometry(2, 0);
-                var mat = new THREE.MeshPhongMaterial({
-                    color: 0xffffff,
-                    shading: THREE.FlatShading
-                });
-
-                for (var i = 0; i < 1000; i++) {
-                    var partMesh = new THREE.Mesh(geome, mat);
-                    partMesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-                    partMesh.position.multiplyScalar(90 + (Math.random() * 200));
-                    partMesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
-                    partMesh.scale.set(.2,.2,.2)
-                    particle.add(partMesh);
-                }
-
-                // renderer
-				renderer = new THREE.WebGLRenderer({antialias: false});
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-				container.appendChild( renderer.domElement );
-                window.addEventListener( 'resize', onWindowResize, false );
-                
-                //shader
-                composer = new THREE.EffectComposer(renderer);
-                renderPass = new THREE.RenderPass( scene, camera );
-                badTVPass = new THREE.ShaderPass( THREE.BadTVShader );
-                filmPass = new THREE.ShaderPass( THREE.FilmShader );
-                RGBPass = new THREE.ShaderPass( THREE.RGBShiftShader );
-                staticPass = new THREE.ShaderPass( THREE.StaticShader );
-			    copyPass = new THREE.ShaderPass( THREE.CopyShader );
-
-                composer.addPass( renderPass );
-                composer.addPass( RGBPass );
-                composer.addPass( filmPass );
-
-                badTVPass.uniforms[ 'distortion' ].value = 1;
-                badTVPass.uniforms[ 'distortion2' ].value = 1.0;
-                badTVPass.uniforms[ 'speed' ].value = 0.3;
-                badTVPass.uniforms[ 'rollSpeed' ].value = 0.00;
-
-                RGBPass.uniforms[ 'angle' ].value = 20*Math.PI;
-			    RGBPass.uniforms[ 'amount' ].value = 3;
-                
-                composer.addPass( badTVPass );
-                badTVPass.renderToScreen = true;
-
-                //CSS3D Scene
-                scene2 = new THREE.Scene();
-
-                //HTML
-                element = document.createElement('div');
-                element.innerHTML = 'sam sycamore,<br> <a href="https://hypergram.co">developer,</a><br> leeds,<br> <a href="mailto:hey@samsycamore.com">email me.</a>';
-                element.className = 'content';
-
-                //CSS Object
-                div = new THREE.CSS3DObject(element);
-                div.position.x = 0;
-                div.position.y = -100;
-                div.position.z = 100;
-                div.rotation.x = 1*Math.PI;
-                div.rotation.y = 3*Math.PI;
-                scene2.add(div);
-
-                //CSS3D Renderer
-                renderer2 = new THREE.CSS3DRenderer();
-                renderer2.setSize(window.innerWidth, window.innerHeight);
-                renderer2.domElement.style.position = 'absolute';
-                renderer2.domElement.style.top = 0;
-                document.body.appendChild(renderer2.domElement);
+            composer.addPass(renderPass);
+            composer.addPass(RGBPass);
+            composer.addPass(filmPass);
 
 
-			}
-			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-			}
-			function animate() {
-                requestAnimationFrame( animate );
+            badTVPass.uniforms['distortion'].value = 1;
+            badTVPass.uniforms['distortion2'].value = 1.0;
+            badTVPass.uniforms['speed'].value = 0.3;
+            badTVPass.uniforms['rollSpeed'].value = 0.00;
 
-                shaderTime += 0.1;
-                badTVPass.uniforms[ 'time' ].value =  shaderTime;
-                filmPass.uniforms[ 'time' ].value =  shaderTime;
-                // mesh.rotation.z += 0.01;
-                particle.rotation.x += 0.0005;
-                particle.rotation.y -= 0.0000;
-                particle.rotation.z -= 0.0005;
-                composer.render( scene, camera );
-                renderer2.render(scene2, camera);
-            }
-            
+            RGBPass.uniforms['angle'].value = 20 * Math.PI;
+            RGBPass.uniforms['amount'].value = 3;
 
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener("deviceorientation", function () {
+            composer.addPass(badTVPass);
+            badTVPass.renderToScreen = true;
+        }
 
-                    if(event.beta && event.gamma){
-                        var mouse3D = new THREE.Vector3(
-                            ( event.beta ) /10 - 7,
-                            2,
-                            0.5 );
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            shaderTime += 0.1;
+            badTVPass.uniforms['time'].value = shaderTime;
+            filmPass.uniforms['time'].value = shaderTime;
+            //  if (mesh.scale.x < .3){
+            //     mesh.scale.x += 0.002;
+            //  mesh.scale.y += 0.002;
+            //  mesh.scale.z += 0.002;
+            //  }
+            particle.rotation.x += 0.0005;
+            particle.rotation.y -= 0.0000;
+            particle.rotation.z -= 0.0005;
+            composer.render(scene, camera);
+        }
+
+
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener("deviceorientation", function () {
+
+                if (event.beta && event.gamma) {
+                    var mouse3D = new THREE.Vector3(
+                        (event.beta) / 10 - 7,
+                        2,
+                        0.5);
                     mesh.lookAt(mouse3D);
-                    }
-                    
-                }, true);
-                
-            } else if (window.DeviceMotionEvent) {
-                window.addEventListener('devicemotion', function () {
-                    if(event.acceleration.x && event.acceleration.y){
-                        var mouse3D = new THREE.Vector3(
-                            ( event.acceleration.x )/5 - 7,
-                            2,
-                            0.5 );
-                        mesh.lookAt(mouse3D);
-                    }
-                }, true);
-            } 
+                }
 
-            window.addEventListener('mousemove', function(e){
-                var mouse3D = new THREE.Vector3(
-                    ( event.clientX / window.innerWidth ) * 2 - 1,
-                    - ( event.clientY / window.innerHeight ) * 2 + 2,
-                    0.5 );
+            }, true);
 
-                mesh.lookAt(mouse3D);
-            })
-		</script>
-	</body>
+        } else if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', function () {
+                if (event.acceleration.x && event.acceleration.y) {
+                    var mouse3D = new THREE.Vector3(
+                        (event.acceleration.x) / 5 - 7,
+                        2,
+                        0.5);
+                    mesh.lookAt(mouse3D);
+                }
+            }, true);
+        }
+
+        window.addEventListener('mousemove', function (e) {
+            var mouse3D = new THREE.Vector3(
+                (event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 2,
+                0.5);
+
+            mesh.lookAt(mouse3D);
+        })
+    </script>
+</body>
+
 </html>
