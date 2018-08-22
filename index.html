@@ -47,7 +47,7 @@
         }
 
         * {
-            font-size: 20px;
+            font-size: 5vw;
         }
 
        
@@ -83,7 +83,7 @@
         var container;
         var particle;
         var camera, controls, scene, renderer, loader, material, loadCallback, scene2, element, div, renderer2;
-        var filmPass, RGBPass;
+        var badTVPass, filmPass, RGBPass;
         var shaderTime = 0;
         var cross;
         var mesh;
@@ -147,7 +147,7 @@
             //shader
             composer = new THREE.EffectComposer(renderer);
             renderPass = new THREE.RenderPass(scene, camera);
-//             badTVPass = new THREE.ShaderPass(THREE.BadTVShader);
+            badTVPass = new THREE.ShaderPass(THREE.BadTVShader);
             filmPass = new THREE.ShaderPass(THREE.FilmShader);
             RGBPass = new THREE.ShaderPass(THREE.RGBShiftShader);
             copyPass = new THREE.ShaderPass(THREE.CopyShader);
@@ -157,16 +157,16 @@
             composer.addPass(filmPass);
 
 
-//             badTVPass.uniforms['distortion'].value = 1;
-//             badTVPass.uniforms['distortion2'].value = 1.0;
-//             badTVPass.uniforms['speed'].value = 0.3;
-//             badTVPass.uniforms['rollSpeed'].value = 0.00;
+            badTVPass.uniforms['distortion'].value = 1;
+            badTVPass.uniforms['distortion2'].value = 1.0;
+            badTVPass.uniforms['speed'].value = 0.3;
+            badTVPass.uniforms['rollSpeed'].value = 0.00;
 
             RGBPass.uniforms['angle'].value = 20 * Math.PI;
             RGBPass.uniforms['amount'].value = 3;
 
-//             composer.addPass(badTVPass);
-//             badTVPass.renderToScreen = true;
+            composer.addPass(badTVPass);
+            badTVPass.renderToScreen = true;
         }
 
         function onWindowResize() {
@@ -179,7 +179,7 @@
             requestAnimationFrame(animate);
 
             shaderTime += 0.1;
-//             badTVPass.uniforms['time'].value = shaderTime;
+            badTVPass.uniforms['time'].value = shaderTime;
             filmPass.uniforms['time'].value = shaderTime;
             //  if (mesh.scale.x < .3){
             //     mesh.scale.x += 0.002;
